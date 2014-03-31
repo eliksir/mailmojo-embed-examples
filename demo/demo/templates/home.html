@@ -35,7 +35,7 @@
   {% if debug and request.session.access_token %}
   <h2>DEBUG INFO</h2>
   <dl class="debug access-tokens">
-    <dt>Access Token:</dt>
+    <dt>Top Level Access Token:</dt>
     <dd>{{ request.session.access_token }}</dd>
     {% if 'user_access_token' in request.session %}
     <dt>User Access Token:</dt>
