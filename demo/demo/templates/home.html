@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>MailMojo API Demo</h1>
+  <p>
+    Write in the username of one of your sub-accounts and you will be redirected to the
+    embedded newsletter creation process.
+  </p>
+
+  <form method="post">
+    {% csrf_token %}
+    <div>
+      <input type="text" name="username" id="username" placeholder="Type in a username...">
+      <button type="submit" name="submit">Start</button>
+    </div>
+  </form>
+
+  {% if request.session.access_token %}
+  <dl class="access-tokens">
+    <dt>Access Token:</dt>
+    <dd>{{ request.session.access_token }}</dd>
+    <dt>User Access Token:</dt>
+    <dd>{{ request.session.user_access_token }}</dd>
+  </dl>
+  {% endif %}
+{% endblock %}

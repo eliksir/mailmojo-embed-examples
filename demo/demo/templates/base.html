@@ -1,0 +1,13 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MailMojo - API Demo</title>
+  <link rel="stylesheet" href="{% static 'app.css' %}" type="text/css">
+</head>
+<body>
+  <div id="content">
+  {% block content %}{% endblock %}
+  </div>
+</body>
+</html>
