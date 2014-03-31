@@ -71,8 +71,6 @@ API_GRANT_URL = '{}/oauth/grant_code'.format(API_BASE_URL)
 CLIENT_ID = ''
 CLIENT_SECRET = ''
 
-USER_IP = '134.90.144.118'
-
 CSS_URL = 'http://mm-api-demo.e5r.no/static/newsletter.css'
 
 

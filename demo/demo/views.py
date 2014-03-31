@@ -41,10 +41,10 @@ def get_user_access_token(grant_code):
     return json.loads(r.text)
 
 
-def get_embed_url(user_access_token, with_css=None):
+def get_embed_url(user_access_token, ip, with_css=None):
     data = {
         'session_type': 'newsletter',
-        'user_ip': settings.USER_IP,
+        'user_ip': ip,
         'options': {
             'skip_recipients_step': True,
             'lang': 'no',
@@ -102,6 +102,7 @@ def newsletter(request):
         return redirect('home')
 
     embed_url = get_embed_url(request.session['user_access_token'],
+                              ip=request.META['REMOTE_ADDR'],
                               with_css=request.session['custom-css'])
     return render(request, 'newsletter.html', {
         'embed_url': embed_url
