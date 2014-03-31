@@ -60,7 +60,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 
 STATIC_URL = '/static/'
-
+STATIC_ROOT = '/home/e5r/domains/mm-api-demo.e5r.no/public_html'
 
 # MailMojo OAuth 2.0
 
