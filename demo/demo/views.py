@@ -48,7 +48,8 @@ def get_embed_url(user_access_token):
         'user_ip': settings.USER_IP,
         'options': {
             'skip_recipients_step': True,
-            'lang': 'no'
+            'lang': 'no',
+            'css': settings.CSS_URL
         }
     }
     headers = {
@@ -64,6 +65,10 @@ def get_embed_url(user_access_token):
 
 def home(request):
     """Handles creating access token for given user."""
+    if 'force_update' in request.GET:
+        del request.session['access_token']
+        del request.session['access_token_expires_at']
+
     # Make sure we have a valid top level access-token
     if ('access_token' not in request.session or
             request.session['access_token_expires_at'] < datetime.now().strftime('%s')):

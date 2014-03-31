@@ -10,7 +10,8 @@ SECRET_KEY = '_%giz7*=p-r+*rv3rn&)es3&msrq(8^itl@qop$boc46@a0i_-'
 
 DEBUG = True
 TEMPLATE_DEBUG = True
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['e5r.no']
+
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -70,7 +71,9 @@ API_GRANT_URL = '{}/oauth/grant_code'.format(API_BASE_URL)
 CLIENT_ID = '87ce8b97-6e6a-4ac4-8aaa-b8c53fcf365a'
 CLIENT_SECRET = 'a secret and secure passcode'
 
-USER_IP = ''
+USER_IP = '134.90.144.118'
+
+CSS_URL = 'http://e5r.no/mm-demo-api/static/newsletter.css'
 
 
 # Import local settings if they exist
