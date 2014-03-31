@@ -45,6 +45,10 @@ iframe {
 	border: 0;
 }
 
+form {
+	margin-top: 30px;
+}
+
 form input[type=text],
 button {
 	display: inline-block;
@@ -56,6 +60,10 @@ button {
 
 form input[type=text] {
 	width: 220px;
+}
+
+form .custom-css {
+	margin-bottom: 10px;
 }
 
 button {

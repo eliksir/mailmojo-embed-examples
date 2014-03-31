@@ -9,6 +9,15 @@
 
   <form method="post">
     {% csrf_token %}
+    <div class="custom-css">
+      Custom CSS:
+      <label>
+        <input type="radio" name="custom-css" value="yes" checked="checked"> Yes
+      </label>
+      <label>
+        <input type="radio" name="custom-css" value="yes"> No
+      </label>
+    </div>
     <div>
       <input type="text" name="username" id="username" placeholder="Type in a username...">
       <button type="submit" name="submit">Start</button>

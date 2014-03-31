@@ -41,16 +41,18 @@ def get_user_access_token(grant_code):
     return json.loads(r.text)
 
 
-def get_embed_url(user_access_token):
+def get_embed_url(user_access_token, with_css=None):
     data = {
         'session_type': 'newsletter',
         'user_ip': settings.USER_IP,
         'options': {
             'skip_recipients_step': True,
             'lang': 'no',
-            'css': settings.CSS_URL
         }
     }
+    if with_css == 'yes':
+        data['options']['css'] = settings.CSS_URL
+
     headers = {
       'Authorization': 'Bearer {}'.format(user_access_token),
       'Content-Type': 'application/json',
@@ -87,6 +89,8 @@ def home(request):
                                     token=request.session['access_token'])
         token_info = get_user_access_token(grant_code)
         request.session['user_access_token'] = token_info['access_token']
+        # Support custom CSS or not
+        request.session['custom-css'] = request.POST.get('custom-css')
         return redirect('newsletter')
 
     return render(request, 'home.html')
@@ -97,7 +101,8 @@ def newsletter(request):
     if 'user_access_token' not in request.session:
         return redirect('home')
 
-    embed_url = get_embed_url(request.session['user_access_token'])
+    embed_url = get_embed_url(request.session['user_access_token'],
+                              with_css=request.session['custom-css'])
     return render(request, 'newsletter.html', {
         'embed_url': embed_url
     })
