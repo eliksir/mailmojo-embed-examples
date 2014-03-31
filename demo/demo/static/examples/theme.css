@@ -126,6 +126,39 @@ body > header input[name="subject"]:focus {
 }
 
 /*
+ * Finally, after form submits we might display validation errors, either as a
+ * top level message or specifically for the field that is invalid. These have
+ * a very visible, red style by default, but you might want to adjust like so:
+ */
+
+/*
+ * Top level messages are displayed as a list directly below the header, with
+ * each list item as a message. Default style is for success messages, while
+ * the .error class is used for, of course, error messages.
+ */
+
+ul.messages li {
+	background-color: #000;
+	color: #fff;
+	font-weight: normal;
+}
+
+ul.messages li.error {
+	background-color: #900;
+	font-weight: bold;
+}
+
+/*
+ * Form field errors are listed in a list inside the field container, which
+ * itself will have an error class:
+ */
+
+form div.error ul.error-messages li {
+	background-color: #900;
+	font-weight: bold;
+}
+
+/*
  * First step is choosing a template, which lists templates with previews in a
  * grid. The grid should usually not be customized as it requires knowledge
  * about our different media queries. But general colors and styling is
@@ -172,5 +205,3 @@ body > header input[name="subject"]:focus {
 .datetime-chooser .xdsoft_datetimepicker .xdsoft_calendar .xdsoft_current.xdsoft_today {
 	color: #fff;
 }
-
-

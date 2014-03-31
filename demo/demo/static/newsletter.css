@@ -19,7 +19,6 @@ button, .button {
 	color: #fff;
 }
 
-/* TODO */
 button.radius, .button.radius {
 	border-radius: 8px;
 }

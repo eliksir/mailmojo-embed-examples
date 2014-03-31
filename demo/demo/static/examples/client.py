@@ -61,8 +61,8 @@ CLIENT_AUTH_KEY = b64encode('{0}:{1}'.format(CLIENT_ID, CLIENT_SECRET))
 request = Request(API_TOKEN_URL,
                   data=urlencode({
                       'grant_type': 'client_credentials',
-                      # TODO: Correct scope
-                      #'scope': 'users.partner'
+                      # TODO: Supported scopes will be provided soon
+                      #'scope': '...'
                   }),
                   headers={
                       'Authorization': 'Basic {}'.format(CLIENT_AUTH_KEY)
@@ -74,7 +74,7 @@ response = urlopen(request)
 #     'access_token': 'izf1wvfRA5iZWmNdzXBu80zLgZPPTb',
 #     'expires_in': 2592000,
 #     'token_type': 'Bearer',
-#     'scope': 'users.partner'
+#     'scope': '...'
 #   }
 token_info = json.loads(response.read())
 
@@ -153,8 +153,8 @@ grant_code = user_grant_info['grant_code']
 request = Request(API_TOKEN_URL,
                   data=urlencode({
                       'grant_type': 'authorization_code',
-                      # TODO: Correct scope
-                      #'scope': 'users.partner',
+                      # TODO: Supported scopes will be provided soon
+                      #'scope': '...',
                       'code': grant_code
                   }),
                   headers={
@@ -167,7 +167,7 @@ response = urlopen(request)
 # token, like this:
 #   {
 #     'access_token': 's7IpoJNMhkJx5Z80PNQZ9o00hVKFL8',
-#     'scope': 'users.partner',
+#     'scope': '...',
 #     'token_type': 'Bearer',
 #     'expires_in': 604800,
 #     'refresh_token': 'OE6PNcgmw3AC4lN3MD9Ghq6rh6UFWj'
@@ -280,8 +280,8 @@ embed_url = response.info().get('Location')
 request = Request(API_TOKEN_URL,
                   data=urlencode({
                       'grant_type': 'refresh_token',
-                      # TODO: Again, correct scope
-                      #'scope': 'users.partner',
+                      # TODO: Supported scopes will be provided soon
+                      #'scope': '...',
                       'refresh_token': user_refresh_token
                   }),
                   headers={
