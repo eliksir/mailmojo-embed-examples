@@ -1,10 +1,8 @@
-/* Control basic typography and colors through the body: */
 body {
 	color: #444;
 	font-family: Arial, sans-serif;
 }
 
-/* Main header containing subject input and navigation: */
 body > header {
 	padding-top: 1rem;
 	padding-bottom: 1rem;
@@ -12,7 +10,6 @@ body > header {
 	color: #444;
 }
 
-/* All buttons have the same basic style, override with this selector: */
 button, .button {
 	border-radius: 8px;
 	background-color: #8072c9;
@@ -23,42 +20,37 @@ button.radius, .button.radius {
 	border-radius: 8px;
 }
 
-/* If you customize button colors, remember to update hover styles: */
+
 button:hover, .button:hover {
 	background-color: #2d245c;
 	color: #ddd;
 }
 
-/* You should also customize the focus style: */
 button:focus, .button:focus {
 	background-color: #968bd2;
 	color: #ddd;
 }
 
-/* And lastly for buttons, the disabled style */
+
 button[disabled], button.disabled, .button.disabled,
 button[disabled]:hover, button.disabled:hover, .button.disabled:hover {
 	background-color: #ccc;
 	color: #eee;
 }
 
-/* A couple of special buttons are the next/previous step navigators: */
 body > header nav ul li.next a,
 body > header nav ul li.prev a {
 	border-radius: 8px;
 	background-color: #44378d;
 	color: #fff;
 }
-/* Also with hover styles, of course: */
 body > header nav ul li.next a:hover,
 body > header nav ul li.prev a:hover {
 	background-color: #4a3c9a;
 	color: #ddd;
 }
 
-/* If you customize vbuttons, you probably want to customize the step
- * indicators. These have three states: Default, done and active:
- */
+
 body > header nav ul li.step-info > ol li {
 	border-radius: 5px;
 	background-color: #d8d4ee;
@@ -72,7 +64,6 @@ body > header nav ul li.step-info > ol li.active {
 	background-color: #8072c9;
 }
 
-/* Form elements has some general styling that you can override easily: */
 
 fieldset {
 	padding: 0;
@@ -102,14 +93,8 @@ input[type="email"]:focus {
 	border-color: #968bd2;
 }
 
-/* A special input field is the subject field in the header */
 
 body > header input[name="subject"] {
-	/*
-	 * Transparent background is the default, which makes the subject
-	 * look seemless like regular text, but the border in addition to
-	 * placeholder text indicates it's editable.
-	 */
 	background-color: transparent;
 	border-bottom: 1px dashed #444;
 	color: #44378d;
@@ -119,12 +104,23 @@ body > header input[name="subject"]:focus {
 	border-bottom-color: transparent;
 }
 
-/*
- * First step is choosing a template, which lists templates with previews in a
- * grid. The grid should usually not be customized as it requires knowledge
- * about our different media queries. But general colors and styling is
- * recommended if you do any theming:
- */
+
+ul.messages li {
+	background-color: #968bd2;
+	color: #fff;
+	font-weight: normal;
+}
+
+ul.messages li.error {
+	background-color: #d05569;
+	font-weight: bold;
+}
+
+form div.error ul.error-messages li {
+	background-color: #d05569;
+	font-weight: bold;
+}
+
 
 .templates li label {
 	text-align: left;
@@ -140,29 +136,21 @@ body > header input[name="subject"]:focus {
 	background-color: #7566c4;
 }
 
-/*
- * Final step has a date and time picker (jQuery's datetimepicker by xdsoft) which
- * you should update colors of if you change colors elsewhere:
- */
 
-/* Background color of date and time choices: */
 .datetime-chooser .xdsoft_datetimepicker .xdsoft_calendar td:hover,
 .datetime-chooser .xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box>div>div:hover {
 	background-color: #aca3db !important;
 }
 
-/* Text color of today's date when it is not selected: */
 .datetime-chooser .xdsoft_datetimepicker .xdsoft_calendar td.xdsoft_today {
 	color: #444;
 }
 
-/* Background color of currently selected date and time: */
 .datetime-chooser .xdsoft_datetimepicker .xdsoft_calendar .xdsoft_current,
 .datetime-chooser .xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box>div>div.xdsoft_current {
 	background-color: #44378d;
 }
 
-/* Text color of currently selected date when it is also today: */
 .datetime-chooser .xdsoft_datetimepicker .xdsoft_calendar .xdsoft_current.xdsoft_today {
 	color: #fff;
 }
