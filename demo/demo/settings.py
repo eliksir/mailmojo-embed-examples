@@ -10,7 +10,7 @@ SECRET_KEY = '_%giz7*=p-r+*rv3rn&)es3&msrq(8^itl@qop$boc46@a0i_-'
 
 DEBUG = False
 TEMPLATE_DEBUG = False
-ALLOWED_HOSTS = ['.e5r.no']
+ALLOWED_HOSTS = ['mm-api-demo.e5r.no']
 INTERNAL_IPS = ['134.90.144.118']
 
 INSTALLED_APPS = (
@@ -73,7 +73,7 @@ CLIENT_SECRET = ''
 
 USER_IP = '134.90.144.118'
 
-CSS_URL = 'http://e5r.no/mm-demo-api/static/newsletter.css'
+CSS_URL = 'http://mm-api-demo.e5r.no/static/newsletter.css'
 
 
 # Import local settings if they exist
