@@ -20,8 +20,13 @@
   <dl class="debug access-tokens">
     <dt>Access Token:</dt>
     <dd>{{ request.session.access_token }}</dd>
+    {% if 'user_access_token' in request.session %}
     <dt>User Access Token:</dt>
     <dd>{{ request.session.user_access_token }}</dd>
+    {% endif %}
   </dl>
+  <ul>
+    <li><a href="?force_update">Force update new tokens</a></li>
+  <ul>
   {% endif %}
 {% endblock %}

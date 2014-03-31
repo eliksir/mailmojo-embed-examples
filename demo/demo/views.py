@@ -67,6 +67,8 @@ def home(request):
     if 'force_update' in request.GET:
         del request.session['access_token']
         del request.session['access_token_expires_at']
+        if 'user_access_token' in request.session:
+            del request.session['user_access_token']
 
     # Make sure we have a valid top level access-token
     if ('access_token' not in request.session or
