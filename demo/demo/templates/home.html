@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load staticfiles %}
 
 {% block content %}
   <p>
@@ -22,6 +23,14 @@
       <button type="submit" name="submit">Start</button>
     </div>
   </form>
+
+
+  <h2>Documentation</h2>
+  <ul>
+    <li><a href="{% static 'client.py' %}">Python API example</a></li>
+    <li><a href="{% static 'example_theme.css' %}">CSS example theme</a></li>
+  </ul>
+
 
   {% if debug and request.session.access_token %}
   <h2>DEBUG INFO</h2>

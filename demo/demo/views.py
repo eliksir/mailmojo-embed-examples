@@ -78,7 +78,7 @@ def home(request):
     if ('access_token' not in request.session or
             request.session['access_token_expires_at'] < datetime.now().strftime('%s')):
         token_info = get_access_token()
-        if 'access_token' not in token_info:
+        if token_info.get('acces_token'):
             raise Http404
 
         request.session['access_token'] = token_info['access_token']
