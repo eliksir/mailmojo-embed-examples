@@ -11,3 +11,4 @@ parts
 docs/_build
 cover/
 .tox
+local_settings.py

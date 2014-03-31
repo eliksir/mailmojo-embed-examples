@@ -13,7 +13,6 @@ def get_access_token():
     """Retrieve top level access-token."""
     data = {
         'grant_type': 'client_credentials',
-        #'scope': 'default'
     }
     headers = {
         'Authorization': 'Basic {}'.format(AUTH_KEY)
