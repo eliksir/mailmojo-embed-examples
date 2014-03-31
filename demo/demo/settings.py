@@ -64,12 +64,12 @@ STATIC_ROOT = '/home/e5r/domains/mm-api-demo.e5r.no/public_html/prod'
 
 # MailMojo OAuth 2.0
 
-API_BASE_URL = 'https://sandbox.mailmojo.no'
+API_BASE_URL = 'https://api.mailmojo.no'
 API_TOKEN_URL = '{}/oauth/token'.format(API_BASE_URL)
 API_GRANT_URL = '{}/oauth/grant_code'.format(API_BASE_URL)
 
-CLIENT_ID = ''
-CLIENT_SECRET = ''
+CLIENT_ID = 'ac12f326-e37d-46b2-b4eb-e6aec767ed38'
+CLIENT_SECRET = 'test1234'
 
 CSS_URL = 'http://mm-api-demo.e5r.no/static/newsletter.css'
 
