@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1>MailMojo API Demo</h1>
+  <h1>MailMojo API - Embed newsletter demo</h1>
   <p>
-    Write in the username of one of your sub-accounts and you will be redirected to the
+    Type in the username of a sub-account and you will be redirected to the
     embedded newsletter creation process.
   </p>
 
@@ -16,7 +16,8 @@
   </form>
 
   {% if request.session.access_token %}
-  <dl class="access-tokens">
+  <h2>DEBUG INFO <small>(hover to see)</small></h2>
+  <dl class="debug access-tokens">
     <dt>Access Token:</dt>
     <dd>{{ request.session.access_token }}</dd>
     <dt>User Access Token:</dt>

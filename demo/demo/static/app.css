@@ -3,25 +3,34 @@ body {
 	font-size: 14px;
 }
 
-h1 {
+h1, h2 {
 	font-size: 2rem;
 	font-weight: normal;
 }
 
-h1, p {
+h2 {
+	font-size: 1.2rem;
+}
+
+h1, h2, p {
 	margin: 0 0 20px 0;
+}
+
+dl {
 }
 
 dt {
 	font-weight: bold;
 }
+
 dd {
 	margin: 0 0 10px 0;
+	font-family: Courier;
 }
 
 #content {
 	width: 960px;
-	margin: 0 auto;
+	margin: 20px auto;
 }
 
 iframe {
@@ -40,4 +49,14 @@ button {
 	padding: 8px 15px;
 	font-size: 0.8rem;
 	border: 1px solid #ccc;
+}
+h2 {
+	margin-top: 40px;
+}
+h2 + .debug {
+	display: none;
+}
+
+h2:hover + .debug {
+	display: block;
 }
