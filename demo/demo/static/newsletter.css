@@ -8,15 +8,20 @@ body {
 body > header {
 	padding-top: 1rem;
 	padding-bottom: 1rem;
-	background-color: #efefef;
+	background-color: #efedf8;
 	color: #444;
 }
 
 /* All buttons have the same basic style, override with this selector: */
 button, .button {
-	border-radius: 10px;
+	border-radius: 8px;
 	background-color: #8072c9;
 	color: #fff;
+}
+
+/* TODO */
+button.radius, .button.radius {
+	border-radius: 8px;
 }
 
 /* If you customize button colors, remember to update hover styles: */
@@ -41,7 +46,7 @@ button[disabled]:hover, button.disabled:hover, .button.disabled:hover {
 /* A couple of special buttons are the next/previous step navigators: */
 body > header nav ul li.next a,
 body > header nav ul li.prev a {
-	border-radius: 0px;
+	border-radius: 8px;
 	background-color: #44378d;
 	color: #fff;
 }
@@ -56,7 +61,7 @@ body > header nav ul li.prev a:hover {
  * indicators. These have three states: Default, done and active:
  */
 body > header nav ul li.step-info > ol li {
-	border-radius: 0;
+	border-radius: 5px;
 	background-color: #d8d4ee;
 }
 
@@ -108,7 +113,7 @@ body > header input[name="subject"] {
 	 */
 	background-color: transparent;
 	border-bottom: 1px dashed #444;
-	color: #fff;
+	color: #44378d;
 }
 body > header input[name="subject"]:focus {
 	background-color: #e3e1f3;
@@ -128,7 +133,7 @@ body > header input[name="subject"]:focus {
 
 .templates li img {
 	margin-bottom: 1rem; /* Space beneath image, before name */
-	border-radius: 0;
+	border-radius: 10px;
 	background-color: #cdc8ea;
 }
 
