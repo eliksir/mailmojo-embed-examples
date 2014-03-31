@@ -104,6 +104,20 @@ body > header input[name="subject"]:focus {
 	border-bottom-color: transparent;
 }
 
+form .error-messages {
+	margin: 0 0 1rem 0;
+	padding: 0;
+	list-style-type:none;
+}
+
+form .error-messages li {
+	padding: 5px 10px;
+	color: #fff;
+}
+
+.error label, .error label.error {
+	color: #d05569;
+}
 
 ul.messages li {
 	background-color: #968bd2;
