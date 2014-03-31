@@ -10,7 +10,7 @@ SECRET_KEY = '_%giz7*=p-r+*rv3rn&)es3&msrq(8^itl@qop$boc46@a0i_-'
 
 DEBUG = True
 TEMPLATE_DEBUG = True
-ALLOWED_HOSTS = ['e5r.no']
+ALLOWED_HOSTS = ['.e5r.no']
 
 
 INSTALLED_APPS = (
@@ -68,8 +68,8 @@ API_BASE_URL = 'https://sandbox.mailmojo.no'
 API_TOKEN_URL = '{}/oauth/token'.format(API_BASE_URL)
 API_GRANT_URL = '{}/oauth/grant_code'.format(API_BASE_URL)
 
-CLIENT_ID = '87ce8b97-6e6a-4ac4-8aaa-b8c53fcf365a'
-CLIENT_SECRET = 'a secret and secure passcode'
+CLIENT_ID = ''
+CLIENT_SECRET = ''
 
 USER_IP = '134.90.144.118'
 
