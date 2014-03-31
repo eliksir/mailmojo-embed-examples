@@ -1,6 +1,9 @@
+* { box-sizing: border-box; }
+
 body {
 	font-family: Arial, sans-serif;
 	font-size: 14px;
+	color: #444;
 }
 
 h1, h2 {
@@ -39,24 +42,27 @@ iframe {
 	border: 0;
 }
 
-form input[type=text] {
-	width: 200px;
-	padding: 5px 10px;
+form input[type=text],
+button {
+	display: inline-block;
+	height: 30px;
+	padding: 0 10px;
+	border: 1px solid #ccc;
 	font-size: 0.8rem;
+}
+
+form input[type=text] {
+	width: 220px;
 }
 
 button {
-	padding: 8px 15px;
-	font-size: 0.8rem;
-	border: 1px solid #ccc;
-}
-h2 {
-	margin-top: 40px;
-}
-h2 + .debug {
-	display: none;
+	padding: 0 20px;
 }
 
-h2:hover + .debug {
-	display: block;
+button:focus {
+	border: 1px solid #888;
+}
+
+h2 {
+	margin-top: 40px;
 }

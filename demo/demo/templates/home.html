@@ -15,8 +15,8 @@
     </div>
   </form>
 
-  {% if request.session.access_token %}
-  <h2>DEBUG INFO <small>(hover to see)</small></h2>
+  {% if debug and request.session.access_token %}
+  <h2>DEBUG INFO</h2>
   <dl class="debug access-tokens">
     <dt>Access Token:</dt>
     <dd>{{ request.session.access_token }}</dd>
