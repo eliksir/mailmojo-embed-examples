@@ -11,10 +11,10 @@
     <div class="custom-css">
       Custom CSS:
       <label>
-        <input type="radio" name="custom-css" value="yes" checked="checked"> Yes
+        <input type="radio" name="custom_css" value="yes" checked="checked"> Yes
       </label>
       <label>
-        <input type="radio" name="custom-css" value="no"> No
+        <input type="radio" name="custom_css" value="no"> No
       </label>
     </div>
     <div>
@@ -31,6 +31,8 @@
     {% if 'user_access_token' in request.session %}
     <dt>User Access Token:</dt>
     <dd>{{ request.session.user_access_token }}</dd>
+    <dt>Use custom CSS:</dt>
+    <dd>{{ request.session.custom_css }}</dd>
     {% endif %}
   </dl>
   <ul>

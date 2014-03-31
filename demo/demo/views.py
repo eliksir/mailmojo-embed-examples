@@ -41,7 +41,7 @@ def get_user_access_token(grant_code):
     return json.loads(r.text)
 
 
-def get_embed_url(user_access_token, ip, with_css=None):
+def get_embed_url(user_access_token, ip, custom_css=None):
     data = {
         'session_type': 'newsletter',
         'user_ip': ip,
@@ -50,8 +50,10 @@ def get_embed_url(user_access_token, ip, with_css=None):
             'lang': 'no',
         }
     }
-    if with_css == 'yes':
+    if custom_css == 'yes':
         data['options']['css'] = settings.CSS_URL
+
+    print data
 
     headers = {
       'Authorization': 'Bearer {}'.format(user_access_token),
@@ -84,13 +86,13 @@ def home(request):
                 timedelta(seconds=token_info['expires_in'])).strftime('%s')
 
     # Creates new user_access_token for specified username
-    if request.POST and 'username' in request.POST:
+    if request.POST.get('username'):
         grant_code = get_grant_code(username=request.POST['username'],
                                     token=request.session['access_token'])
         token_info = get_user_access_token(grant_code)
         request.session['user_access_token'] = token_info['access_token']
         # Support custom CSS or not
-        request.session['custom-css'] = request.POST.get('custom-css')
+        request.session['custom_css'] = request.POST.get('custom_css')
         return redirect('newsletter')
 
     return render(request, 'home.html')
@@ -98,12 +100,13 @@ def home(request):
 
 def newsletter(request):
     """Open iframe with embed newsletter for given user."""
-    if 'user_access_token' not in request.session:
+    user_access_token = request.session.get('user_access_token')
+    if not user_access_token:
         return redirect('home')
 
-    embed_url = get_embed_url(request.session['user_access_token'],
+    embed_url = get_embed_url(user_access_token,
                               ip=request.META['REMOTE_ADDR'],
-                              with_css=request.session['custom-css'])
+                              custom_css=request.session.get('custom_css'))
     return render(request, 'newsletter.html', {
         'embed_url': embed_url
     })
