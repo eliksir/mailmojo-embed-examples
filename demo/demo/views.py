@@ -27,7 +27,7 @@ def get_grant_code(username, token):
     headers = {'Authorization': 'Bearer {}'.format(token)}
     r = requests.post(settings.API_GRANT_URL, data=data, headers=headers)
     user_grant_info = json.loads(r.text)
-    return user_grant_info['grant_code']
+    return user_grant_info.get('grant_code')
 
 
 def get_user_access_token(grant_code):
@@ -89,11 +89,12 @@ def home(request):
     if request.POST.get('username'):
         grant_code = get_grant_code(username=request.POST['username'],
                                     token=request.session['access_token'])
-        token_info = get_user_access_token(grant_code)
-        request.session['user_access_token'] = token_info['access_token']
-        # Support custom CSS or not
-        request.session['custom_css'] = request.POST.get('custom_css')
-        return redirect('newsletter')
+        if grant_code:
+            token_info = get_user_access_token(grant_code)
+            request.session['user_access_token'] = token_info['access_token']
+            # Support custom CSS or not
+            request.session['custom_css'] = request.POST.get('custom_css')
+            return redirect('newsletter')
 
     return render(request, 'home.html')
 
