@@ -47,7 +47,7 @@ def get_embed_url(user_access_token, ip, custom_css=None):
         'user_ip': ip,
         'options': {
             'skip_recipients_step': True,
-            'lang': 'no',
+            'lang': 'nb',
         }
     }
     if custom_css == 'yes':
