@@ -64,7 +64,6 @@ body > header nav ul li.step-info > ol li.active {
 	background-color: #8072c9;
 }
 
-
 fieldset {
 	padding: 0;
 	border: 0;
@@ -167,4 +166,15 @@ form div.error ul.error-messages li {
 
 .datetime-chooser .xdsoft_datetimepicker .xdsoft_calendar .xdsoft_current.xdsoft_today {
 	color: #fff;
+}
+
+
+.list-choices legend,
+.segmenting-choices legend {
+	margin-bottom: 0.5rem;
+}
+
+.list-choices input,
+.segmenting-choices input {
+	margin-bottom: 0;
 }

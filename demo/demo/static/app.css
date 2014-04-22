@@ -34,6 +34,14 @@ dd {
 	font-family: Courier;
 }
 
+a {
+	color: #f2943d;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
 #content {
 	width: 960px;
 	margin: 20px auto;
@@ -46,7 +54,33 @@ iframe {
 }
 
 form {
-	margin-top: 30px;
+	margin: 20px 0 50px 0;
+	padding: 10px 20px;
+	background-color: #efefef;
+}
+
+form fieldset {
+	margin: 0 0 20px 0;
+	padding: 0;
+	border: 0;
+}
+
+
+fieldset legend {
+	margin: 0 0 10px 0;
+	padding: 0;
+	font-size: 1rem;
+}
+
+form label {
+	display: inline-block;
+	width: 150px;
+}
+
+form .field p {
+	margin: 5px 0 0 154px;
+	font-size: 0.8rem;
+	color: #888;
 }
 
 form input[type=text],
@@ -55,7 +89,17 @@ button {
 	height: 30px;
 	padding: 0 10px;
 	border: 1px solid #ccc;
+	background-color: #fff;
 	font-size: 0.8rem;
+}
+
+form button {
+	padding: 0 20px;
+	background-color: #f2943d;
+	color: #fff;
+	border: 0;
+	font-size: 0.9rem;
+	cursor: pointer;
 }
 
 form input[type=text] {
@@ -76,4 +120,15 @@ button:focus {
 
 h2 {
 	margin-top: 40px;
+}
+
+.errors {
+	padding: 10px 20px;
+	background-color: #fcbec2;
+	font-weight: bold;
+}
+
+.force-update {
+	padding: 0;
+	background-color: #fff;
 }

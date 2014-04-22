@@ -5,6 +5,8 @@ from datetime import datetime, timedelta
 from django.conf import settings
 from django.shortcuts import Http404, redirect, render
 
+from .forms import EmbedForm
+
 
 AUTH_KEY = b64encode('{0}:{1}'.format(settings.CLIENT_ID, settings.CLIENT_SECRET))
 
@@ -41,19 +43,16 @@ def get_user_access_token(grant_code):
     return json.loads(r.text)
 
 
-def get_embed_url(user_access_token, ip, custom_css=None):
+def get_embed_url(user_access_token, ip, options=None):
     data = {
         'session_type': 'newsletter',
         'user_ip': ip,
-        'options': {
-            'skip_recipients_step': True,
-            'lang': 'nb',
-        }
+        'options': {'lang': 'nb'}
     }
-    if custom_css == 'yes':
-        data['options']['css'] = settings.CSS_URL
 
-    print data
+    data['options']['lang'] = options.get('lang')
+    data['options']['css'] = settings.CSS_URL if options.get('css') else None
+    data['options']['skip_recipients_step'] = options.get('skip_recipients_step')
 
     headers = {
       'Authorization': 'Bearer {}'.format(user_access_token),
@@ -68,12 +67,6 @@ def get_embed_url(user_access_token, ip, custom_css=None):
 
 def home(request):
     """Handles creating access token for given user."""
-    if 'force_update' in request.GET:
-        del request.session['access_token']
-        del request.session['access_token_expires_at']
-        if 'user_access_token' in request.session:
-            del request.session['user_access_token']
-
     # Make sure we have a valid top level access-token
     if ('access_token' not in request.session or
             request.session['access_token_expires_at'] < datetime.now().strftime('%s')):
@@ -85,18 +78,43 @@ def home(request):
         request.session['access_token_expires_at'] = (datetime.now() +
                 timedelta(seconds=token_info['expires_in'])).strftime('%s')
 
-    # Creates new user_access_token for specified username
-    if request.POST.get('username'):
-        grant_code = get_grant_code(username=request.POST['username'],
-                                    token=request.session['access_token'])
-        if grant_code:
-            token_info = get_user_access_token(grant_code)
-            request.session['user_access_token'] = token_info['access_token']
-            # Support custom CSS or not
-            request.session['custom_css'] = request.POST.get('custom_css')
-            return redirect('newsletter')
+    if request.POST:
+        form = EmbedForm(request.POST)
 
-    return render(request, 'home.html')
+        if form.is_valid():
+            # Retrieve access token if we do not have any or has expired
+            if ('user_access_token' not in request.session or
+                    request.session['uat_expires_at'] < datetime.now().strftime('%s')):
+
+                # Creates new user_access_token for specified username
+                grant_code = get_grant_code(username=form.cleaned_data['username'],
+                                            token=request.session['access_token'])
+                if grant_code:
+                    token_info = get_user_access_token(grant_code)
+                    request.session['user_access_token'] = token_info['access_token']
+                    request.session['uat_expires_at'] = (datetime.now() +
+                            timedelta(seconds=token_info['expires_in'])).strftime('%s')
+
+            # Options
+            request.session['options'] = {
+                'lang': form.cleaned_data['lang'],
+                'css': form.cleaned_data['css'],
+                'skip_recipients_step': form.cleaned_data['skip_recipients_step'],
+            }
+            return redirect('newsletter')
+    else:
+        form = EmbedForm()
+    return render(request, 'home.html', {'form': form})
+
+
+def force_update(request):
+    """Removes all access tokens in session."""
+    keys = ('access_token', 'access_token_expires_at', 'user_access_token',
+            'uat_expires_at')
+    for session_key in keys:
+        if session_key in request.session:
+            del request.session[session_key]
+    return redirect('home')
 
 
 def newsletter(request):
@@ -107,7 +125,7 @@ def newsletter(request):
 
     embed_url = get_embed_url(user_access_token,
                               ip=request.META['REMOTE_ADDR'],
-                              custom_css=request.session.get('custom_css'))
+                              options=request.session.get('options'))
     return render(request, 'newsletter.html', {
         'embed_url': embed_url
     })
