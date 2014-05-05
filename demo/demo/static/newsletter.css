@@ -1,8 +1,10 @@
+/* Control basic typography and colors through the body: */
 body {
 	color: #444;
 	font-family: Arial, sans-serif;
 }
 
+/* Main header containing subject input and step navigation: */
 body > header {
 	padding-top: 1rem;
 	padding-bottom: 1rem;
@@ -10,60 +12,113 @@ body > header {
 	color: #444;
 }
 
+
+/* If you customize the header background color, you should synchronize the
+ * step title and icon background-color. And at the same time you can customize
+ * their base styles too: */
+
+.steps-navigation .step h4 {
+	background-color: #efedf8;
+	color: #a197d7;
+}
+
+
+.steps-navigation .step .icon {
+	background-color: #efedf8;
+	border-width: 2px;
+
+	border-color: #a197d7;
+	color: #a197d7;
+
+	/* The icons are set through a custom font, so you can easily adjust size
+	 * too (default is 1rem): */
+	font-size: 1.1rem;
+}
+
+/* If you customize the steps you should also style the two extra states for
+ * active and upcoming steps: */
+
+.steps-navigation .step.active h4 {
+	color: #7566c4;
+}
+
+.steps-navigation .step.active .icon {
+	border-color: #7566c4;
+	color: #7566c4;
+}
+
+.steps-navigation .step.upcoming h4 {
+	color: #888;
+}
+
+.steps-navigation .step.upcoming .icon {
+	border-color: #888;
+	color: #888;
+}
+
+/* Lastly, customize the previous/next navigation buttons */
+
+.steps-navigation .prev a,
+.steps-navigation .next a {
+	color: #44378d;
+}
+
+.steps-navigation .prev a:hover,
+.steps-navigation .next a:hover {
+	color: #44378d;
+}
+
+
+/* You can also customize the line through steps, which by default differs
+ * depending on device. If you don't want the line, set `display: none` for
+ * both types. First the default for mobile devices: */
+
+.steps-navigation:before {
+	border-style: solid;
+	border-width: 1px;
+	border-color: #a197d7;
+}
+
+/* Then for other devices: */
+
+@media only screen and (min-width: 40.063em) {
+	.steps-navigation .step:before {
+		border-style: solid;
+		border-width: 1px;
+		border-color: #a197d7;
+	}
+}
+
+
+/* All buttons have the same basic style, override with this selector: */
 button, .button {
 	border-radius: 8px;
 	background-color: #8072c9;
 	color: #fff;
 }
 
-button.radius, .button.radius {
-	border-radius: 8px;
-}
-
-
+/* If you customize button colors, remember to update hover styles: */
 button:hover, .button:hover {
 	background-color: #2d245c;
 	color: #ddd;
 }
 
+/* You should also customize the focus style: */
 button:focus, .button:focus {
 	background-color: #968bd2;
 	color: #ddd;
 }
 
-
+/* And lastly for buttons, the disabled style */
 button[disabled], button.disabled, .button.disabled,
 button[disabled]:hover, button.disabled:hover, .button.disabled:hover {
 	background-color: #ccc;
 	color: #eee;
 }
 
-body > header nav ul li.next a,
-body > header nav ul li.prev a {
-	border-radius: 8px;
-	background-color: #44378d;
-	color: #fff;
-}
-body > header nav ul li.next a:hover,
-body > header nav ul li.prev a:hover {
-	background-color: #4a3c9a;
-	color: #ddd;
-}
 
 
-body > header nav ul li.step-info > ol li {
-	border-radius: 5px;
-	background-color: #d8d4ee;
-}
-
-body > header nav ul li.step-info > ol li.done {
-	background-color: #a197d7;
-}
-
-body > header nav ul li.step-info > ol li.active {
-	background-color: #8072c9;
-}
-
+/* Form elements has some general styling that you can override easily: */
 fieldset {
 	padding: 0;
 	border: 0;
@@ -92,7 +147,7 @@ input[type="email"]:focus {
 	border-color: #968bd2;
 }
 
-
+/* A special input field is the subject field in the header */
 body > header input[name="subject"] {
 	background-color: transparent;
 	border-bottom: 1px dashed #444;
@@ -103,37 +158,67 @@ body > header input[name="subject"]:focus {
 	border-bottom-color: transparent;
 }
 
-form .error-messages {
-	margin: 0 0 1rem 0;
-	padding: 0;
-	list-style-type:none;
+/*
+ * Top level messages are displayed directly below the header in a box.
+ * Messages come in several types, each with a matching class for styling. The
+ * two currently used types are success and alert for successful and failed
+ * requests respectively. Other types which may be used, but currently are not,
+ * are info and warning, with matching classes.
+ */
+
+.alerts .alert-box {
+	border-radius: 0;
+	border-width: 1px;
+	font-weight: bold;
 }
 
-form .error-messages li {
-	padding: 5px 10px;
-	color: #fff;
+.alerts .alert-box.success {
+	background-color: #090;
+	border-color: #050;
 }
 
-.error label, .error label.error {
-	color: #d05569;
+.alerts .alert-box.alert {
+	background-color: #d05569;
+	border-color: #d05569;
 }
 
-ul.messages li {
-	background-color: #968bd2;
-	color: #fff;
+.alerts .alert-box.info {
+	background-color: #009;
+	border-color: #005;
+}
+
+.alerts .alert-box.warning {
+	background-color: #d05569;
+	border-color: #d05569;
+	color: #222;
+}
+
+/*
+ * Form field errors are listed inside the field container, in a box attached
+ * to the input field with errors. The input itself by default also has a
+ * matching colored border, and you can adjust further with a different
+ * background:
+ */
+
+form .error .error-messages {
+	background-color: #d05569;
 	font-weight: normal;
+	font-style: normal;
+	border-radius: 0;
 }
 
-ul.messages li.error {
-	background-color: #d05569;
-	font-weight: bold;
+form .error input {
+	border-color: #d05569;
+	background-color: #ffffff;
 }
 
-form div.error ul.error-messages li {
-	background-color: #d05569;
-	font-weight: bold;
-}
 
+/*
+ * Second step is choosing a template, which lists templates with previews in a
+ * grid. The grid should usually not be customized as it requires knowledge
+ * about our different media queries. But general colors and styling is
+ * recommended if you do any theming:
+ */
 
 .templates li label {
 	text-align: left;
@@ -150,20 +235,28 @@ form div.error ul.error-messages li {
 }
 
 
+/*
+ * Final step has a date and time picker (jQuery's datetimepicker by xdsoft) which
+ * you should update colors of if you change colors elsewhere:
+ */
+/* Background color of date and time choices: */
 .datetime-chooser .xdsoft_datetimepicker .xdsoft_calendar td:hover,
 .datetime-chooser .xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box>div>div:hover {
 	background-color: #aca3db !important;
 }
 
+/* Text color of today's date when it is not selected: */
 .datetime-chooser .xdsoft_datetimepicker .xdsoft_calendar td.xdsoft_today {
 	color: #444;
 }
 
+/* Background color of currently selected date and time: */
 .datetime-chooser .xdsoft_datetimepicker .xdsoft_calendar .xdsoft_current,
 .datetime-chooser .xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box>div>div.xdsoft_current {
 	background-color: #44378d;
 }
 
+/* Text color of currently selected date when it is also today: */
 .datetime-chooser .xdsoft_datetimepicker .xdsoft_calendar .xdsoft_current.xdsoft_today {
 	color: #fff;
 }
