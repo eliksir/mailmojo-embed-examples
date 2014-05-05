@@ -14,12 +14,13 @@ AUTH_KEY = b64encode('{0}:{1}'.format(settings.CLIENT_ID, settings.CLIENT_SECRET
 def get_access_token():
     """Retrieve top level access-token."""
     data = {
-        'grant_type': 'client_credentials',
+        'grant_type': 'client_credentials'
     }
     headers = {
         'Authorization': 'Basic {}'.format(AUTH_KEY)
     }
     r = requests.post(settings.API_TOKEN_URL, data=data, headers=headers)
+    print r.text
     return json.loads(r.text)
 
 
@@ -65,35 +66,42 @@ def get_embed_url(user_access_token, ip, options=None):
     return req.headers.get('Location')
 
 
-def home(request):
-    """Handles creating access token for given user."""
-    # Make sure we have a valid top level access-token
+def _validate_or_set_super_token(request):
+    """Make sure we have a valid top level access-token."""
     if ('access_token' not in request.session or
             request.session['access_token_expires_at'] < datetime.now().strftime('%s')):
         token_info = get_access_token()
-        if token_info.get('acces_token'):
+        if not token_info.get('access_token'):
             raise Http404
 
         request.session['access_token'] = token_info['access_token']
         request.session['access_token_expires_at'] = (datetime.now() +
                 timedelta(seconds=token_info['expires_in'])).strftime('%s')
 
+
+def _validate_or_set_user_token(request, username):
+    """Retrieve access token if we do not have any or has expired."""
+    if ('user_access_token' not in request.session or
+            request.session['uat_expires_at'] < datetime.now().strftime('%s')):
+
+        # Creates new user_access_token for specified username
+        grant_code = get_grant_code(username, token=request.session['access_token'])
+        if grant_code:
+            token_info = get_user_access_token(grant_code)
+            request.session['user_access_token'] = token_info['access_token']
+            request.session['uat_expires_at'] = (datetime.now() +
+                    timedelta(seconds=token_info['expires_in'])).strftime('%s')
+
+
+def home(request):
+    """Handles creating super token and token for given user."""
+    _validate_or_set_super_token(request)
+
     if request.POST:
         form = EmbedForm(request.POST)
 
         if form.is_valid():
-            # Retrieve access token if we do not have any or has expired
-            if ('user_access_token' not in request.session or
-                    request.session['uat_expires_at'] < datetime.now().strftime('%s')):
-
-                # Creates new user_access_token for specified username
-                grant_code = get_grant_code(username=form.cleaned_data['username'],
-                                            token=request.session['access_token'])
-                if grant_code:
-                    token_info = get_user_access_token(grant_code)
-                    request.session['user_access_token'] = token_info['access_token']
-                    request.session['uat_expires_at'] = (datetime.now() +
-                            timedelta(seconds=token_info['expires_in'])).strftime('%s')
+            _validate_or_set_user_token(request, form.cleaned_data['username'])
 
             # Options
             request.session['options'] = {
