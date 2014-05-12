@@ -20,27 +20,20 @@ def get_access_token():
         'Authorization': 'Basic {}'.format(AUTH_KEY)
     }
     r = requests.post(settings.API_TOKEN_URL, data=data, headers=headers)
-    print r.text
+    #print "[Super Access Token] ", r.text
     return json.loads(r.text)
 
 
-def get_grant_code(username, token):
-    """Retrieve grant code for user."""
-    data = {'username': username}
-    headers = {'Authorization': 'Bearer {}'.format(token)}
-    r = requests.post(settings.API_GRANT_URL, data=data, headers=headers)
-    user_grant_info = json.loads(r.text)
-    return user_grant_info.get('grant_code')
-
-
-def get_user_access_token(grant_code):
+def get_user_access_token(username, token):
     """Retrieve access-token for user."""
     data = {
-        'grant_type': 'authorization_code',
-        'code': grant_code
+        'grant_type': 'password',
+        'username': username,
+        'password': token,
     }
     headers = {'Authorization': 'Basic {}'.format(AUTH_KEY)}
     r = requests.post(settings.API_TOKEN_URL, data=data, headers=headers)
+    #print "[User Access Token] ", r.text
     return json.loads(r.text)
 
 
@@ -85,12 +78,13 @@ def _validate_or_set_user_token(request, username):
             request.session['uat_expires_at'] < datetime.now().strftime('%s')):
 
         # Creates new user_access_token for specified username
-        grant_code = get_grant_code(username, token=request.session['access_token'])
-        if grant_code:
-            token_info = get_user_access_token(grant_code)
-            request.session['user_access_token'] = token_info['access_token']
-            request.session['uat_expires_at'] = (datetime.now() +
-                    timedelta(seconds=token_info['expires_in'])).strftime('%s')
+        token_info = get_user_access_token(username, token=request.session['access_token'])
+        if not token_info.get('access_token'):
+            raise Http404
+
+        request.session['user_access_token'] = token_info['access_token']
+        request.session['uat_expires_at'] = (datetime.now() +
+                timedelta(seconds=token_info['expires_in'])).strftime('%s')
 
 
 def home(request):
