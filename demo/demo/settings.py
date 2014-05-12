@@ -71,7 +71,9 @@ API_GRANT_URL = '{}/oauth/grant_code'.format(API_BASE_URL)
 CLIENT_ID = 'ac12f326-e37d-46b2-b4eb-e6aec767ed38'
 CLIENT_SECRET = 'test1234'
 
-CSS_URL = 'http://mm-api-demo.e5r.no/static/newsletter.css?v=0.2'
+VERSION = '0.3'
+
+CSS_URL = 'http://mm-api-demo.e5r.no/static/newsletter.css?v=0.3'
 
 
 # Import local settings if they exist
