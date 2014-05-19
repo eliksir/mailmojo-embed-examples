@@ -5,7 +5,7 @@ body {
 }
 
 /* Main header containing subject input and step navigation: */
-body > header {
+main > header {
 	padding-top: 1rem;
 	padding-bottom: 1rem;
 	background-color: #efedf8;
@@ -92,14 +92,14 @@ body > header {
 
 /* All buttons have the same basic style, override with this selector: */
 button, .button {
-	border-radius: 8px;
+	border-radius: 0;
 	background-color: #8072c9;
 	color: #fff;
 }
 
 /* If you customize button colors, remember to update hover styles: */
 button:hover, .button:hover {
-	background-color: #2d245c;
+	background-color: #4b3c99;
 	color: #ddd;
 }
 
@@ -109,13 +109,38 @@ button:focus, .button:focus {
 	color: #ddd;
 }
 
-/* And lastly for buttons, the disabled style */
-button[disabled], button.disabled, .button.disabled,
-button[disabled]:hover, button.disabled:hover, .button.disabled:hover {
+
+/* There's also a secondary button style, which is grey toned by default but
+ * can be adjusted: */
+button.secondary, .button.secondary {
 	background-color: #ccc;
-	color: #eee;
+	color: #333;
+}
+button.secondary:hover, .button.secondary:hover {
+	background-color: #ccc;
 }
 
+
+/* Primary buttons also have icons through the :before element. This has a
+ * slightly darker background color which needs to be adjusted if you change
+ * the main background color: */
+button[class*="fi-"]:before, .button[class*="fi-"]:before {
+	border-radius: 0;
+	background-color: #8b7ece;
+}
+button[class*="fi-"]:hover:before, .button[class*="fi-"]:hover:before {
+	background-color: #45378d;
+}
+
+
+/* And lastly for buttons, the disabled style */
+button[disabled], button.disabled, .button.disabled,
+button[disabled]:hover, button.disabled:hover, .button.disabled:hover,
+button[disabled][class*="fi-"]:before, button.disabled[class*="fi-"]:before,
+.button.disabled[class*="fi-"]:before {
+	background-color: #c3bce5;
+	color: #eee;
+}
 
 
 /* Form elements has some general styling that you can override easily: */
@@ -148,12 +173,12 @@ input[type="email"]:focus {
 }
 
 /* A special input field is the subject field in the header */
-body > header input[name="subject"] {
+main > header input[name="subject"] {
 	background-color: transparent;
 	border-bottom: 1px dashed #444;
 	color: #44378d;
 }
-body > header input[name="subject"]:focus {
+main > header input[name="subject"]:focus {
 	background-color: #e3e1f3;
 	border-bottom-color: transparent;
 }

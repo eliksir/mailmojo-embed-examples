@@ -73,7 +73,7 @@ CLIENT_SECRET = 'test1234'
 
 VERSION = '0.3'
 
-CSS_URL = 'http://mm-api-demo.e5r.no/static/newsletter.css?v=0.3'
+CSS_URL = 'http://mm-api-demo.e5r.no/static/newsletter.css?v=0.4'
 
 
 # Import local settings if they exist
