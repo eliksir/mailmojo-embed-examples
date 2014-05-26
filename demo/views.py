@@ -1,10 +1,13 @@
 from datetime import datetime, timedelta
 from django.conf import settings
 from django.contrib import messages as msg
-from django.shortcuts import Http404, redirect, render
+from django.shortcuts import Http404, redirect
+from django.views.generic import TemplateView, View
+from django.views.generic.edit import FormView
 
 from . import utils
 from .forms import EmbedForm
+from .mixins import NamedSuccessUrlMixin
 
 
 ### HELPER FUNCTIONS ####
@@ -48,66 +51,74 @@ def _set_user_token(request, token_info):
 def _get_redirect_uri(request):
     return request.build_absolute_uri('/')[:-1]
 
+
 #### VIEWS ####
 
 
-def home(request):
-    """Handles creating super token and token for given user."""
-    _validate_or_set_super_token(request)
+class HomeView(NamedSuccessUrlMixin, FormView):
+    template_name = 'home.html'
+    form_class = EmbedForm
+    success_url = 'embed'
 
-    if request.session.get('version') != settings.VERSION:
-        # Make sure we remove previously stored access tokens when we have a
-        # version update
-        return redirect('force-update')
+    def get(self, *args, **kwargs):
+        """Handles creating super token and token for given user."""
+        _validate_or_set_super_token(self.request)
 
-    code = request.GET.get('code')
-    # Retrice access token from given code
-    if code:
-        token_info = utils.get_access_token_from_code(code,
-            redirect_uri=_get_redirect_uri(request))
-        _set_user_token(request, token_info)
-        return redirect('newsletter')
+        if self.request.session.get('version') != settings.VERSION:
+            # Make sure we remove previously stored access tokens when we have a
+            # version update
+            return redirect('force-update')
 
-    if request.POST:
-        form = EmbedForm(request.POST)
+        code = self.request.GET.get('code')
+        # Retrieve access token from given code
+        if code:
+            token_info = utils.get_access_token_from_code(code,
+                redirect_uri=_get_redirect_uri(self.request))
+            _set_user_token(self.request, token_info)
+            return redirect('embed')
 
-        if form.is_valid():
-            # Embed options
-            request.session['options'] = {
-                'lang': form.cleaned_data['lang'],
-                'css': form.cleaned_data['css'],
-                'skip_recipients_step': form.cleaned_data['skip_recipients_step'],
-            }
+        return super(HomeView, self).get(*args, **kwargs)
 
-            # Redirect to authorize to retrieve a code
-            if form.cleaned_data.get('auth_code_grant'):
-                url = utils.get_auth_grant_url(
-                        redirect_uri=_get_redirect_uri(request))
-                return redirect(url)
+    def form_valid(self, form):
+        # Embed options
+        self.request.session['options'] = {
+            'lang': form.cleaned_data['lang'],
+            'css': form.cleaned_data['css'],
+            'skip_recipients_step': form.cleaned_data['skip_recipients_step'],
+        }
 
-            _validate_or_set_user_token(request, form.cleaned_data['username'])
-            return redirect('newsletter')
-    else:
-        form = EmbedForm()
-    return render(request, 'home.html', {'form': form})
+        # Redirect to authorize to retrieve a code
+        if form.cleaned_data.get('auth_code_grant'):
+            url = utils.get_auth_grant_url(
+                    redirect_uri=_get_redirect_uri(self.request))
+            return redirect(url)
 
-
-def force_update(request):
-    """Removes all access tokens and expire dates in session."""
-    request.session.flush()
-    request.session['version'] = settings.VERSION
-    return redirect('home')
+        _validate_or_set_user_token(self.request, form.cleaned_data['username'])
+        return super(HomeView, self).form_valid(form)
 
 
-def newsletter(request):
-    """Open iframe with embed newsletter for given user."""
-    user_access_token = request.session.get('user_access_token')
-    if not user_access_token:
+class ForceUpdateView(View):
+    def post(self, *args, **kwargs):
+        """Removes all access tokens and expire dates in session."""
+        self.request.session.flush()
+        self.request.session['version'] = settings.VERSION
         return redirect('home')
 
-    embed_url = utils.get_embed_url(user_access_token,
-                                    ip=request.META['REMOTE_ADDR'],
-                                    options=request.session.get('options'))
-    return render(request, 'newsletter.html', {
-        'embed_url': embed_url
-    })
+
+class EmbedView(TemplateView):
+    """Open iframe with embed newsletter for given user."""
+    template_name = 'newsletter.html'
+
+    def get_context_data(self, **kwargs):
+        data = super(EmbedView, self).get_context_data(**kwargs)
+
+        user_access_token = self.request.session.get('user_access_token')
+        if not user_access_token:
+            return redirect('home')
+
+        embed_url = utils.get_embed_url(user_access_token,
+                ip=self.request.META['REMOTE_ADDR'],
+                options=self.request.session.get('options'))
+        data['embed_url'] = embed_url
+        return data
+

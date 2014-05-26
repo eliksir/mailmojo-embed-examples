@@ -51,7 +51,8 @@
     {% endif %}
   </dl>
 
-  <form action="{% url 'force-update' %}" class="force-update">
+  <form action="{% url 'force-update' %}" method="post" class="force-update">
+    {% csrf_token %}
     <div class="field">
       <button type="submit">Force update tokens</button>
     </div>
