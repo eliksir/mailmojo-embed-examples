@@ -7,38 +7,22 @@
     embedded newsletter creation process.
   </p>
 
-  {% if form.errors %}
-  <p class="errors">
-    Username is required
-  </p>
-  {% endif %}
-
   <form method="post">
     {% csrf_token %}
 
     <fieldset>
-      <div class="field">
-         <label for="username">{{ form.username.label }}</label>
-        {{ form.username }}
-        <p>Try with the example "demoapi" user.</p>
-      </div>
-    </fieldset>
-
-    <fieldset>
-      <div class="field">
-        <label for="lang">{{ form.lang.label }}</label>
-        {{ form.lang }}
-      </div>
-
-      <div class="field">
-        <label for="css">{{ form.css.label }}</label>
-        {{ form.css }}
-      </div>
-
-      <div class="field">
-        <label for="skip_recipients_step">{{ form.skip_recipients_step.label }}</label>
-        {{ form.skip_recipients_step }}
-      </div>
+      {% for field in form %}
+        <div class="field {{ field.html_name }}{% if field.errors %} errors{% endif%}">
+          <label for="{{ field.id_for_label }}">
+            {{ field.label }}
+          </label>
+          {{ field }}
+          {% if field.help_text %}
+            <p>{{ field.help_text }}</p>
+          {% endif %}
+          {{ field.errors }}
+        </div>
+      {% endfor %}
     </fieldset>
 
     <div class="submit">
