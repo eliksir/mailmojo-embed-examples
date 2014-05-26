@@ -62,6 +62,13 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = '/home/e5r/domains/mm-api-demo.e5r.no/public_html/prod'
 
+
+# Demo app
+
+VERSION = '0.4'
+CSS_URL = 'http://mm-api-demo.e5r.no/static/newsletter.css?v={}'.format(VERSION)
+
+
 # MailMojo OAuth 2.0
 
 API_BASE_URL = 'https://api.mailmojo.no'
@@ -70,10 +77,6 @@ API_GRANT_URL = '{}/oauth/grant_code'.format(API_BASE_URL)
 
 CLIENT_ID = 'ac12f326-e37d-46b2-b4eb-e6aec767ed38'
 CLIENT_SECRET = 'test1234'
-
-VERSION = '0.3'
-
-CSS_URL = 'http://mm-api-demo.e5r.no/static/newsletter.css?v=0.4'
 
 
 # Import local settings if they exist
