@@ -7,10 +7,9 @@ class EmbedForm(forms.Form):
         ('nb', 'Norwegian'),
     )
 
-    username = forms.CharField(required=True,
-            help_text="""Try with the example "demoapi" user.""")
-    auth_code_grant = forms.BooleanField(label='Auth code grant',
-            required=False)
+    username = forms.CharField(required=False,
+        help_text="""Try with the example "demoapi" user or leave blank to
+                     test authorization code grant glow.""")
     lang = forms.ChoiceField(label='Choose language', choices=LANGUAGE, required=True)
     css = forms.BooleanField(label='Use custom CSS', required=False)
     skip_recipients_step = forms.BooleanField(label='Skip recipients step',

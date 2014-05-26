@@ -3,6 +3,7 @@
 body {
 	font-family: Arial, sans-serif;
 	font-size: 14px;
+	line-height: 1.5;
 	color: #444;
 }
 
@@ -77,7 +78,8 @@ form label {
 	width: 150px;
 }
 
-form .field.auth_code_grant {
+
+form .field.username {
 	margin-bottom: 20px;
 }
 
