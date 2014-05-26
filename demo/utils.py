@@ -5,6 +5,12 @@ from django.conf import settings
 
 
 AUTH_KEY = b64encode('{0}:{1}'.format(settings.CLIENT_ID, settings.CLIENT_SECRET))
+API_TOKEN_URL = '{}/oauth/token'.format(settings.API_BASE_URL)
+
+
+def _debug(msg):
+    if settings.DEBUG:
+        print msg
 
 
 def get_access_token():
@@ -15,8 +21,8 @@ def get_access_token():
     headers = {
         'Authorization': 'Basic {}'.format(AUTH_KEY)
     }
-    r = requests.post(settings.API_TOKEN_URL, data=data, headers=headers)
-    #print "[Super Access Token] ", r.text
+    r = requests.post(API_TOKEN_URL, data=data, headers=headers)
+    _debug("[Super Access Token] {}".format(r.text))
     return json.loads(r.text)
 
 
@@ -28,8 +34,8 @@ def get_user_access_token(username, token):
         'password': token,
     }
     headers = {'Authorization': 'Basic {}'.format(AUTH_KEY)}
-    r = requests.post(settings.API_TOKEN_URL, data=data, headers=headers)
-    #print "[User Access Token] ", r.text
+    r = requests.post(API_TOKEN_URL, data=data, headers=headers)
+    _debug("[User Access Token] {}".format(r.text))
     return json.loads(r.text)
 
 
@@ -49,7 +55,7 @@ def get_embed_url(user_access_token, ip, options=None):
       'Content-Type': 'application/json',
       'Accept': 'application/json'
     }
-    req = requests.post('{}/embed'.format(settings.API_BASE_URL),
+    r = requests.post('{}/embed'.format(settings.API_BASE_URL),
                         data=json.dumps(data),
                         headers=headers)
-    return req.headers.get('Location')
+    return r.headers.get('Location')
