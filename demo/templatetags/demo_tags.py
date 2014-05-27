@@ -6,4 +6,4 @@ register = template.Library()
 
 @register.filter
 def to_datetime(value):
-    return datetime.fromtimestamp(int(value))
+    return datetime.fromtimestamp(int(value)) if value else ''
