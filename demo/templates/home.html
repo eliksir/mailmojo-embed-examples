@@ -13,7 +13,6 @@
 
   <div class="tabs-content">
     <div class="content active" id="trans-int">
-
       <p>
         Type in the username of a sub-account and you will be redirected to the
         embedded newsletter creation process.
@@ -52,27 +51,29 @@
     </div>
   </div>
 
-
-
-  <h3>Documentation</h3>
-  <ul>
-    <li><a href="https://api.mailmojo.no/static/docs/examples/client.py">Python API example</a></li>
-    <li><a href="https://api.mailmojo.no/static/docs/examples/theme.css">CSS example theme</a></li>
-  </ul>
+  <h4>Documentation</h4>
+  <div class="panel">
+    <ul>
+      <li><a href="https://api.mailmojo.no/static/docs/examples/client.py">Python API example</a></li>
+      <li><a href="https://api.mailmojo.no/static/docs/examples/theme.css">CSS example theme</a></li>
+    </ul>
+  </div>
 
 
   {% if request.session.access_token %}
-  <h3>DEBUG INFO</h3>
-  <dl class="debug access-tokens">
-    <dt>Top Level Access Token:</dt>
-    <dd>{{ request.session.access_token }}</dd>
-    {% if 'user_access_token' in request.session %}
-    <dt>User Access Token:</dt>
-    <dd>{{ request.session.user_access_token }}</dd>
-    <dt>Options:</dt>
-    <dd>{{ request.session.options }}</dd>
-    {% endif %}
-  </dl>
+  <h4>Debug data</h4>
+  <div class="panel">
+    <dl class="debug access-tokens">
+      <dt>Top Level Access Token:</dt>
+      <dd>{{ request.session.access_token }}</dd>
+      {% if 'user_access_token' in request.session %}
+      <dt>User Access Token:</dt>
+      <dd>{{ request.session.user_access_token }}</dd>
+      <dt>Options:</dt>
+      <dd>{{ request.session.options }}</dd>
+      {% endif %}
+    </dl>
+  </div>
 
   <form action="{% url 'force-update' %}" method="get" class="force-update">
     {% csrf_token %}

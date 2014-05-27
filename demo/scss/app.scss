@@ -1,5 +1,15 @@
 @import "foundation/functions";
+@import "settings";
 @import "foundation";
 
 
-$button-med: rem-calc(10);
+body {
+	margin-top: 20px;
+}
+.header {
+	margin-bottom: 20px;
+}
+
+select {
+	line-height: 1.5;
+}
