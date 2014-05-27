@@ -13,30 +13,29 @@
     {# Transparent integration #}
     <div class="content active" id="trans-int">
       <p>
-        Type in the username of a sub-account, choose settings and you will be redirected to the
-        embedded newsletter creation process.
+        Type in the username of a sub-account, set embed options, click start and you will be redirected to the embedded newsletter creation process.
       </p>
       <form method="post">
         {% csrf_token %}
-        <fieldset>
-          {% for field in form %}
-            <div class="row {{ field.html_name }}">
-              <div class="large-12 columns">
-                <div class="row">
-                  <div class="large-3 columns{% if field.errors %} error{% endif%}">
-                    <label for="{{ field.id_for_label }}">
-                      {{ field.label }}
-                    </label>
-                  </div>
-                  <div class="large-9 columns">
-                   {{ field }}
-                   {{ field.errors }}
-                  </div>
+
+        {% for field in form %}
+          <div class="row {{ field.html_name }}">
+            <div class="large-8 columns">
+              <div class="row">
+                <div class="large-4 columns{% if field.errors %} error{% endif%}">
+                  <label for="{{ field.id_for_label }}">
+                    {{ field.label }}
+                  </label>
+                </div>
+                <div class="large-8 columns">
+                 {{ field }}
+                 {{ field.errors }}
                 </div>
               </div>
             </div>
-          {% endfor %}
-        </fieldset>
+          </div>
+        {% endfor %}
+
         <div class="submit">
           <button type="submit" name="submit">Start</button>
         </div>
@@ -46,31 +45,31 @@
     {# Login integration #}
     <div class="content" id="login-int">
       <p>
-        Choose settings for the embed newsletter and you will be redirected to a login page.
-        Use the username "demopi" and password "demoapi" to continue. You will then be
-        redirected back to embedded newsletter creation process.
+        Set embed options, click start and you will be redirected to a login page
+        where you will have to type in a username and password for an existing
+        MailMojo account. You will then be redirected back to the embedded newsletter creation process.
       </p>
       <form method="post" action="{% url 'login-int' %}">
         {% csrf_token %}
-        <fieldset>
-          {% for field in login_int_form %}
-            <div class="row {{ field.html_name }}">
-              <div class="large-12 columns">
-                <div class="row">
-                  <div class="large-3 columns{% if field.errors %} error{% endif%}">
-                    <label for="{{ field.id_for_label }}">
-                      {{ field.label }}
-                    </label>
-                  </div>
-                  <div class="large-9 columns">
-                   {{ field }}
-                   {{ field.errors }}
-                  </div>
+
+        {% for field in login_int_form %}
+          <div class="row {{ field.html_name }}">
+            <div class="large-8 columns">
+              <div class="row">
+                <div class="large-4 columns{% if field.errors %} error{% endif%}">
+                  <label for="{{ field.id_for_label }}">
+                    {{ field.label }}
+                  </label>
+                </div>
+                <div class="large-8 columns">
+                 {{ field }}
+                 {{ field.errors }}
                 </div>
               </div>
             </div>
-          {% endfor %}
-        </fieldset>
+          </div>
+        {% endfor %}
+
         <div class="submit">
           <button type="submit" name="submit">Start</button>
         </div>

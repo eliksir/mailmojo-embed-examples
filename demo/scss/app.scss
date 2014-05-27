@@ -21,6 +21,13 @@ iframe {
 	border: 0;
 }
 
+form .submit {
+	margin-top: 20px;
+
+	button {
+		margin-bottom: 0;
+	}
+}
 
 .errorlist {
 	margin-top: -10px;
@@ -35,4 +42,13 @@ iframe {
 
 .debug {
 	font-size: 0.875rem;
+}
+
+.tabs .active a {
+	color: $body-font-color;
+}
+
+.tabs-content {
+	padding: 10px 20px;
+	border: 1px solid #dfdfdf;
 }
