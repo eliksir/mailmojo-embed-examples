@@ -1,0 +1,24 @@
+{
+  "name": "mailmojo-embed-examples",
+  "version": "0.1.0",
+  "description": "Frontend libraries for the MailMojo API",
+  "homepage": "https://github.com/eliksir/mailmojo-embed-examples",
+  "authors": [
+    "Stian Prestholdt <stian@e5r.no>"
+  ],
+  "moduleType": [
+    "globals",
+    "node"
+  ],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "foundation": "zurb/foundation#~5.2.1"
+  }
+}

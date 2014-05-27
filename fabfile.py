@@ -37,8 +37,8 @@ def update_requirements():
     with nested(cd(env.root), hide('stdout'),
                 prefix('source %(virtualenv)s/bin/activate' % env)):
         run("pip install -r requirements.txt")
-        #run("npm install")
-        #run("bower install")
+        run("npm install")
+        run("bower install")
 
 def migrate():
     """Migrer databasen."""
@@ -52,7 +52,7 @@ def collect_static():
     require('root', provided_by=('staging', 'production'))
     with nested(cd(env.root),
                 prefix('source %(virtualenv)s/bin/activate' % env)):
-        #run("grunt build")
+        run("grunt build")
         run("yes yes | ./manage.py collectstatic")
 
 def reload():

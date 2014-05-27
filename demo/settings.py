@@ -66,7 +66,7 @@ STATIC_ROOT = '/home/e5r/domains/mm-api-demo.e5r.no/public_html/prod'
 # Demo app
 
 VERSION = '0.4'
-CSS_URL = 'http://mm-api-demo.e5r.no/static/newsletter.css?v={}'.format(VERSION)
+CSS_URL = 'http://mm-api-demo.e5r.no/static/css/newsletter.css?v={}'.format(VERSION)
 
 
 # MailMojo OAuth 2.0

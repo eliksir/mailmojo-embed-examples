@@ -6,12 +6,28 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>MailMojo - API Demo</title>
-  <link rel="stylesheet" href="{% static 'app.css' %}">
+  <link rel="stylesheet" href="{% static 'css/normalize.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/app.css' %}" />
 </head>
-<body>
-<div id="content">
-  <h1>MailMojo API - Embed newsletter demo</h1>
-  {% block content %}{% endblock %}
-</div>
+<body class="antialiased hide-extras">
+  <section role="main">
+    <div class="row">
+      <div class="large-12 columns">
+        <h1>MailMojo API - Embed newsletter demo</h1>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="large-12 columns">
+        {% block content %}{% endblock %}
+      </div>
+    </div>
+  </section>
+
+  <script src="{% static 'js/jquery.js' %}"></script>
+  <script src="{% static 'js/foundation.min.js' %}"></script>
+  <script>
+    $(document).foundation();
+  </script>
 </body>
 </html>
