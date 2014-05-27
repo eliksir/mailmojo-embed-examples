@@ -8,17 +8,14 @@ from . import utils
 
 class TokenMixin(object):
     def set_token_in_session(self, name, token_info):
-        session = self.request.session
-        session[name] = token_info['access_token']
-        session['{}_expires_at'.format(name)] = (datetime.now() +
-                timedelta(seconds=token_info['expires_in'])).strftime('%s')
-
-    def set_user_token(self, token_info):
         if not token_info.get('access_token'):
             msg.error(self.request, "Error: {}".format(token_info.get('error')))
             return False
 
-        self.set_token_in_session('user_access_token', token_info)
+        session = self.request.session
+        session[name] = token_info['access_token']
+        session['{}_expires_at'.format(name)] = (datetime.now() +
+                timedelta(seconds=token_info['expires_in'])).strftime('%s')
 
     def validate_or_set_super_token(self):
         """Set top level access token in session."""
@@ -34,10 +31,10 @@ class TokenMixin(object):
     def validate_or_set_user_token(self, username):
         """Set user access token in session."""
         session = self.request.session
-        if ('user_access_token' not in session or
-                session['user_access_token_expires_at'] < datetime.now().strftime('%s')):
+        if ('ti_access_token' not in session or
+                session['ti_access_token_expires_at'] < datetime.now().strftime('%s')):
             token_info = utils.get_user_access_token(username, token=session['access_token'])
-            self.set_user_token(token_info)
+            self.set_token_in_session('ti_access_token', token_info)
 
 
 class NamedSuccessUrlMixin(object):

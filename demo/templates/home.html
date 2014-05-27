@@ -86,26 +86,40 @@
     </ul>
   </div>
 
-  {% if request.session.access_token %}
   <h3>Debug data</h3>
   <div class="panel">
+    {% if 'access_token' in request.session or 'li_access_token' in request.session %}
     <dl class="debug access-tokens">
-      <dt>Top Level Access Token:</dt>
-      <dd>{{ request.session.access_token }}</dd>
-      {% if 'user_access_token' in request.session %}
-      <dt>User Access Token:</dt>
-      <dd>{{ request.session.user_access_token }}</dd>
-      <dt>Options:</dt>
-      <dd>{{ request.session.options }}</dd>
+      {% if 'access_token' in request.session %}
+      <dt>Transparent integration:</dt>
+      <dd>
+        Top Level Access Token: {{ request.session.access_token }}<br/>
+        User Access token: {{ request.session.ti_access_token }}<br/>
+        {% if 'ti_options' in request.session %}
+        Embed options: {{ request.session.ti_options }}
+        {% endif %}
+      </dd>
+      {% endif %}
+      {% if 'li_access_token' in request.session %}
+      <dt>Login integration:</dt>
+      <dd>
+        Access token: {{ request.session.li_access_token }}<br/>
+        {% if 'li_options' in request.session %}
+        Embed options: {{ request.session.li_options }}
+        {% endif %}
+      </dd>
       {% endif %}
     </dl>
+    {% else %}
+      <em>No debug data.</em>
+    {% endif %}
   </div>
-
-  <form action="{% url 'force-update' %}" method="get" class="force-update">
-    {% csrf_token %}
-    <div class="field">
-      <button type="submit">Force update tokens</button>
-    </div>
-  </form>
+  {% if 'access_token' in request.session or 'li_access_token' in request.session %}
+    <form action="{% url 'force-update' %}" method="get" class="force-update">
+      {% csrf_token %}
+      <div class="field">
+        <button type="submit">Flush tokens</button>
+      </div>
+    </form>
   {% endif %}
 {% endblock %}
