@@ -28,7 +28,7 @@ def pull(branch):
     """Henter HEAD fra master."""
     require('root', provided_by=('staging', 'production'))
     with nested(cd(env.root), show('stdout')):
-        run("git pull origin {}".format(branch))
+        run("git pull")
         run("git checkout -B {0} origin/{0}".format(branch))
 
 def update_requirements():
