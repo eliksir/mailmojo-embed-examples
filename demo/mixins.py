@@ -17,11 +17,14 @@ class TokenMixin(object):
         session['{}_expires_at'.format(name)] = (datetime.now() +
                 timedelta(seconds=token_info['expires_in'])).strftime('%s')
 
+    def is_invalid_token(self, name):
+        session = self.request.session
+        return (name not in session or
+                session['{}_expires_at'.format(name)] < datetime.now().strftime('%s'))
+
     def validate_or_set_super_token(self):
         """Set top level access token in session."""
-        session = self.request.session
-        if ('access_token' not in session or
-                session['access_token_expires_at'] < datetime.now().strftime('%s')):
+        if self.is_invalid_token('access_token'):
             token_info = utils.get_access_token()
             if not token_info.get('access_token'):
                 raise Http404
@@ -31,8 +34,7 @@ class TokenMixin(object):
     def validate_or_set_user_token(self, username):
         """Set user access token in session."""
         session = self.request.session
-        if ('ti_access_token' not in session or
-                session['ti_access_token_expires_at'] < datetime.now().strftime('%s')):
+        if self.is_invalid_token('ti_access_token'):
             token_info = utils.get_user_access_token(username, token=session['access_token'])
             self.set_token_in_session('ti_access_token', token_info)
 

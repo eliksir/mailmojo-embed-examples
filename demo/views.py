@@ -52,9 +52,11 @@ class HomeView(IntegrationViewMixin, NamedSuccessUrlMixin, TokenMixin,  FormView
         return super(HomeView, self).form_valid(form)
 
 
-class LoginIntegrationView(IntegrationViewMixin, FormView):
+class LoginIntegrationView(IntegrationViewMixin, NamedSuccessUrlMixin,
+                           TokenMixin, FormView):
     template_name = 'home.html'
     form_class = forms.LoginIntegrationForm
+    success_url = 'login-int-embed'
 
     def form_valid(self, form):
         self.request.session['li_options'] = {
@@ -64,7 +66,9 @@ class LoginIntegrationView(IntegrationViewMixin, FormView):
         return super(LoginIntegrationView, self).form_valid(form)
 
     def get_success_url(self):
-        return utils.get_auth_grant_url(redirect_uri=self.get_redirect_uri())
+        if self.is_invalid_token('li_access_token'):
+            return utils.get_auth_grant_url(redirect_uri=self.get_redirect_uri())
+        return super(LoginIntegrationView, self).get_success_url()
 
 
 class EmbedView(TemplateView):
