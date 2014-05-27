@@ -50,11 +50,13 @@ SESSION_ENGINE = 'django.contrib.sessions.backends.file'
 
 # Internationalization
 
-LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'UTC'
+LANGUAGE_CODE = 'no-nb'
+TIME_ZONE = 'Europe/Oslo'
 USE_I18N = True
 USE_L10N = True
-USE_TZ = True
+USE_TZ = False
+
+DATETIME_FORMAT = 'Y-m-d H:i:s'
 
 
 # Static files (CSS, JavaScript, Images)
