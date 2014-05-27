@@ -2,8 +2,6 @@
 {% load staticfiles %}
 
 {% block content %}
-
-
   <dl class="tabs" data-tab>
     <dd class="active">
       <a href="#trans-int">Transparent integration</a>
@@ -12,9 +10,10 @@
   </dl>
 
   <div class="tabs-content">
+    {# Transparent integration #}
     <div class="content active" id="trans-int">
       <p>
-        Type in the username of a sub-account and you will be redirected to the
+        Type in the username of a sub-account, choose settings and you will be redirected to the
         embedded newsletter creation process.
       </p>
       <form method="post">
@@ -31,8 +30,8 @@
                   </div>
                   <div class="large-9 columns">
                    {{ field }}
+                   {{ field.errors }}
                   </div>
-                  {{ field.errors }}
                 </div>
               </div>
             </div>
@@ -42,16 +41,44 @@
           <button type="submit" name="submit">Start</button>
         </div>
       </form>
-
     </div>
+
+    {# Login integration #}
     <div class="content" id="login-int">
-
-
-
+      <p>
+        Choose settings for the embed newsletter and you will be redirected to a login page.
+        Use the username "demopi" and password "demoapi" to continue. You will then be
+        redirected back to embedded newsletter creation process.
+      </p>
+      <form method="post" action="{% url 'login-int' %}">
+        {% csrf_token %}
+        <fieldset>
+          {% for field in login_int_form %}
+            <div class="row {{ field.html_name }}">
+              <div class="large-12 columns">
+                <div class="row">
+                  <div class="large-3 columns{% if field.errors %} error{% endif%}">
+                    <label for="{{ field.id_for_label }}">
+                      {{ field.label }}
+                    </label>
+                  </div>
+                  <div class="large-9 columns">
+                   {{ field }}
+                   {{ field.errors }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </fieldset>
+        <div class="submit">
+          <button type="submit" name="submit">Start</button>
+        </div>
+      </form>
     </div>
   </div>
 
-  <h4>Documentation</h4>
+  <h3>Documentation</h3>
   <div class="panel">
     <ul>
       <li><a href="https://api.mailmojo.no/static/docs/examples/client.py">Python API example</a></li>
@@ -59,9 +86,8 @@
     </ul>
   </div>
 
-
   {% if request.session.access_token %}
-  <h4>Debug data</h4>
+  <h3>Debug data</h3>
   <div class="panel">
     <dl class="debug access-tokens">
       <dt>Top Level Access Token:</dt>

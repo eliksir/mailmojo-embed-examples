@@ -3,14 +3,29 @@ from django.shortcuts import redirect
 from django.views.generic import TemplateView, View
 from django.views.generic.edit import FormView
 
+from . import forms
 from . import utils
-from .forms import EmbedForm
 from .mixins import NamedSuccessUrlMixin, TokenMixin
 
 
-class HomeView(NamedSuccessUrlMixin, TokenMixin, FormView):
+class IntegrationView(NamedSuccessUrlMixin, TokenMixin, FormView):
+    def form_valid(self, form):
+        # Embed options
+        self.request.session['options'] = {
+            'lang': form.cleaned_data.get('lang'),
+            'css': form.cleaned_data.get('css'),
+            'skip_recipients_step': form.cleaned_data.get('skip_recipients_step'),
+        }
+        return super(IntegrationView, self).form_valid(form)
+
+    def get_redirect_uri(self):
+        """Return redirect URI."""
+        return self.request.build_absolute_uri('/')[:-1]
+
+
+class HomeView(IntegrationView):
     template_name = 'home.html'
-    form_class = EmbedForm
+    form_class = forms.TransparentIntegrationForm
     success_url = 'embed'
 
     def get(self, *args, **kwargs):
@@ -32,26 +47,22 @@ class HomeView(NamedSuccessUrlMixin, TokenMixin, FormView):
 
         return super(HomeView, self).get(*args, **kwargs)
 
+    def get_context_data(self, **kwargs):
+        data = super(HomeView, self).get_context_data(**kwargs)
+        data['login_int_form'] = forms.LoginIntegrationForm()
+        return data
+
     def form_valid(self, form):
-        # Embed options
-        self.request.session['options'] = {
-            'lang': form.cleaned_data['lang'],
-            'css': form.cleaned_data['css'],
-            'skip_recipients_step': form.cleaned_data['skip_recipients_step'],
-        }
-
-        username = form.cleaned_data.get('username')
-        # Redirect to authorize endpoint to retrieve a code
-        if not username:
-            url = utils.get_auth_grant_url(redirect_uri=self.get_redirect_uri())
-            return redirect(url)
-
-        self.validate_or_set_user_token(username)
+        self.validate_or_set_user_token(form.cleaned_data.get('username'))
         return super(HomeView, self).form_valid(form)
 
-    def get_redirect_uri(self):
-        """Return redirect URI."""
-        return self.request.build_absolute_uri('/')[:-1]
+
+class LoginIntegrationView(IntegrationView):
+    template_name = 'home.html'
+    form_class = forms.LoginIntegrationForm
+
+    def get_success_url(self):
+        return utils.get_auth_grant_url(redirect_uri=self.get_redirect_uri())
 
 
 class ForceUpdateView(View):
