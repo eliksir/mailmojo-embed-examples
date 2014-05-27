@@ -44,7 +44,7 @@ class HomeView(IntegrationViewMixin, NamedSuccessUrlMixin, TokenMixin,  FormView
     def form_valid(self, form):
         self.request.session['ti_options'] = {
             'lang': form.cleaned_data.get('lang'),
-            'css': form.cleaned_data.get('css'),
+            'css': settings.CSS_URL if form.cleaned_data.get('css') else None,
             'skip_recipients_step': form.cleaned_data.get('skip_recipients_step'),
         }
         self.validate_or_set_super_token()

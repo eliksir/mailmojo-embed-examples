@@ -87,25 +87,25 @@
   </div>
 
   <h3>Debug data</h3>
-  <div class="panel">
+  <div class="panel debug">
     {% if 'access_token' in request.session or 'li_access_token' in request.session %}
     <dl class="debug access-tokens">
       {% if 'access_token' in request.session %}
       <dt>Transparent integration:</dt>
       <dd>
-        Top Level Access Token: {{ request.session.access_token }}<br/>
-        User Access token: {{ request.session.ti_access_token }}<br/>
+        Top Level Access Token: <code>{{ request.session.access_token }}</code><br/>
+        User Access token: <code>{{ request.session.ti_access_token }}</code><br/>
         {% if 'ti_options' in request.session %}
-        Embed options: {{ request.session.ti_options }}
+        Embed options: <code>{{ request.session.ti_options }}</code>
         {% endif %}
       </dd>
       {% endif %}
       {% if 'li_access_token' in request.session %}
       <dt>Login integration:</dt>
       <dd>
-        Access token: {{ request.session.li_access_token }}<br/>
+        Access token: <code>{{ request.session.li_access_token }}</code><br/>
         {% if 'li_options' in request.session %}
-        Embed options: {{ request.session.li_options }}
+        Embed options: <code>{{ request.session.li_options }}</code>
         {% endif %}
       </dd>
       {% endif %}

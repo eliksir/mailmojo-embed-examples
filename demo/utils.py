@@ -61,12 +61,8 @@ def get_embed_url(user_access_token, ip, options=None):
     data = {
         'session_type': 'newsletter',
         'user_ip': ip,
-        'options': {'lang': 'nb'}
+        'options': options,
     }
-
-    data['options']['lang'] = options.get('lang')
-    data['options']['css'] = settings.CSS_URL if options.get('css') else None
-    data['options']['skip_recipients_step'] = options.get('skip_recipients_step')
 
     headers = {
       'Authorization': 'Bearer {}'.format(user_access_token),
