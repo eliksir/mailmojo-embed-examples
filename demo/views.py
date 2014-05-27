@@ -55,7 +55,7 @@ class HomeView(NamedSuccessUrlMixin, TokenMixin, FormView):
 
 
 class ForceUpdateView(View):
-    def post(self, *args, **kwargs):
+    def get(self, *args, **kwargs):
         """Removes all access tokens and expire dates in session."""
         self.request.session.flush()
         self.request.session['version'] = settings.VERSION
