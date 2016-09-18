@@ -111,7 +111,7 @@ class EmbedView(TemplateView):
             options=self.request.session.get(self.options_key),
         )
         embed = embed_session.create()
-        data['embed_url'] = embed['url']
+        data['embed'] = embed['content']
 
         return data
 

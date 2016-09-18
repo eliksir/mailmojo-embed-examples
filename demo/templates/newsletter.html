@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  {% if embed_url %}
-    <iframe src="{{ embed_url }}"></iframe>
+  {% if embed %}
+    {{ embed|safe }}
   {% else %}
     <p><em>Something went wrong. No embed URL!</em></p>
   {% endif %}
