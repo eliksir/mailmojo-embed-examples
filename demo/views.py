@@ -86,7 +86,7 @@ class LoginIntegrationView(IntegrationViewMixin,
             return Auth.get_authorization_url(
                 client_id=settings.MAILMOJO['CLIENT_ID'],
                 redirect_uri=self.get_redirect_uri(),
-                scope='embed_newsletter_creation'
+                scope=['embed_newsletter_creation']
             )
 
         return super(LoginIntegrationView, self).get_success_url()
