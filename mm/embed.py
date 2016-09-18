@@ -2,7 +2,7 @@ import requests
 
 
 class EmbedSession:
-    API_ENDPOINT = 'https://api.mailmojo.no/embed/'
+    API_ENDPOINT = 'https://api.mailmojo.no/v1/embed/'
     TYPE_NEWSLETTERS = 'newsletters'
     TYPES = (
         TYPE_NEWSLETTERS,
