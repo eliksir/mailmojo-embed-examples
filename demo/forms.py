@@ -1,8 +1,9 @@
 from django import forms
 
 LOCALES = (
-    ('en_US', 'English'),
     ('nb_NO', 'Norwegian'),
+    ('sv_SE', 'Swedish'),
+    ('en_US', 'English'),
 )
 
 
