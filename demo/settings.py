@@ -13,6 +13,10 @@ TEMPLATE_DEBUG = False
 ALLOWED_HOSTS = ['mm-api-demo.e5r.no']
 INTERNAL_IPS = ['134.90.144.118', '84.215.96.200', '77.40.215.202']
 
+ADMINS = [
+    ('Stian Prestholdt', 'stian@e5r.no'),
+]
+
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
