@@ -3,22 +3,24 @@
 
 {% block content %}
   <dl class="tabs" data-tab>
-    <dd class="active">
+    <dd class="active"><a href="#login-int">Login integration</a></dd>
+    <dd>
       <a href="#trans-int">Transparent integration</a>
     </dd>
-    <dd><a href="#login-int">Login integration</a></dd>
   </dl>
 
   <div class="tabs-content">
-    {# Transparent integration #}
-    <div class="content active" id="trans-int">
+    {# Login integration #}
+    <div class="content active" id="login-int">
       <p>
-        Type in the username of a sub-account, set embed options, click start and you will be redirected to the embedded newsletter creation process.
+        Set embed options, click start and you will be redirected to a login page
+        where you will have to type in a username and password for an existing
+        MailMojo account. You will then be redirected back to the embedded newsletter creation process.
       </p>
-      <form method="post">
+      <form method="post" action="{% url 'login-int' %}">
         {% csrf_token %}
 
-        {% for field in form %}
+        {% for field in login_int_form %}
           <div class="row {{ field.html_name }}">
             <div class="large-8 columns">
               <div class="row">
@@ -42,17 +44,15 @@
       </form>
     </div>
 
-    {# Login integration #}
-    <div class="content" id="login-int">
+    {# Transparent integration #}
+    <div class="content" id="trans-int">
       <p>
-        Set embed options, click start and you will be redirected to a login page
-        where you will have to type in a username and password for an existing
-        MailMojo account. You will then be redirected back to the embedded newsletter creation process.
+        Type in the username of a sub-account, set embed options, click start and you will be redirected to the embedded newsletter creation process.
       </p>
-      <form method="post" action="{% url 'login-int' %}">
+      <form method="post">
         {% csrf_token %}
 
-        {% for field in login_int_form %}
+        {% for field in form %}
           <div class="row {{ field.html_name }}">
             <div class="large-8 columns">
               <div class="row">
