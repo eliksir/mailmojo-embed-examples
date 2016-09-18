@@ -1,8 +1,8 @@
 from django import forms
 
-LANGUAGE = (
-    ('en', 'English'),
-    ('nb', 'Norwegian'),
+LOCALES = (
+    ('en_US', 'English'),
+    ('nb_NO', 'Norwegian'),
 )
 
 
@@ -10,13 +10,16 @@ class TransparentIntegrationForm(forms.Form):
     username = forms.CharField(widget=forms.TextInput(attrs={
         'placeholder': 'Try with the example "demoapi" user'
     }))
-    lang = forms.ChoiceField(label='Choose language', choices=LANGUAGE, required=True)
-    skip_recipients_step = forms.BooleanField(label='Skip recipients step',
-            initial=True, required=False)
-    css = forms.BooleanField(label='Use custom CSS', required=False)
+    locale = forms.ChoiceField(label='Choose language', choices=LOCALES,
+                               required=True)
+    enable_theme = forms.BooleanField(label='Enable theme', required=False)
+    enable_newsletters_index = forms.BooleanField(
+        label='Enable newsletter index', required=False, initial=True)
 
 
 class LoginIntegrationForm(forms.Form):
-    lang = forms.ChoiceField(label='Choose language', choices=LANGUAGE, required=True)
-    skip_recipients_step = forms.BooleanField(label='Skip recipients step',
-            initial=True, required=False)
+    locale = forms.ChoiceField(label='Choose language', choices=LOCALES,
+                               required=True)
+    enable_theme = forms.BooleanField(label='Enable theme', required=False)
+    enable_newsletters_index = forms.BooleanField(
+        label='Enable newsletters index', required=False, initial=True)

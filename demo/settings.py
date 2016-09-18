@@ -67,22 +67,19 @@ STATIC_ROOT = '/home/e5r/domains/mm-api-demo.e5r.no/public_html/prod'
 
 # Demo app
 
-VERSION = '0.5'
-CSS_URL = 'http://mm-api-demo.e5r.no/static/css/newsletter.css?v={}'.format(VERSION)
+VERSION = '1.0'
 
 
 # MailMojo OAuth 2.0
-
-API_BASE_URL = 'https://api.mailmojo.no'
-
-CLIENT_ID = 'ac12f326-e37d-46b2-b4eb-e6aec767ed38'
-CLIENT_SECRET = 'test1234'
+MAILMOJO = {
+    'CLIENT_ID': 'ac12f326-e37d-46b2-b4eb-e6aec767ed38',
+    'CLIENT_SECRET': 'test1234',
+}
 
 
 # Import local settings if they exist
 
 try:
-    from local_settings import *
+    from demo.local_settings import *
 except ImportError:
     pass
-
